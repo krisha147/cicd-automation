@@ -1,23 +1,23 @@
-name: 🚀 Deploy and Test Pipeline
+name: Deploy and Test Pipeline
 
 on:
   push:
     branches:
-      - main  
+      - main
 
 jobs:
   deploy-staging:
-    name: 🚀 Deploy to Staging
+    name: Deploy to Staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Simulate Staging Deployment
-        run: echo "Staging environment deployed"
+        run: echo "Staging environment deployed "
 
   cypress-tests:
-    name: 🧪 Run Cypress Tests
+    name: Run Cypress Tests
     runs-on: ubuntu-latest
     needs: deploy-staging
     steps:
@@ -30,8 +30,8 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-         run: |
-          npm i 
+        run: |
+          npm i
           npm i cypress
 
       - name: Install Cypress binary
@@ -39,17 +39,16 @@ jobs:
 
       - name: Run Cypress Tests
         env:
-
-          EMAIL: ${{ secrets.EMAIL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          TOTP_SECRET: ${{ secrets.TOTP_SECRET }}
+          CYPRESS_EMAIL: ${{ secrets.EMAIL }}
+          CYPRESS_PASSWORD: ${{ secrets.PASSWORD }}
+          CYPRESS_TOTPSECRET: ${{ secrets.TOTP_SECRET }}
         run: |
           echo "Running Cypress with email=$CYPRESS_EMAIL"
           npx cypress run \
             --env email=$CYPRESS_EMAIL,password=$CYPRESS_PASSWORD,totpSecret=$CYPRESS_TOTPSECRET
 
   deploy-dev:
-    name: 🚀 Deploy to Dev
+    name: Deploy to Dev
     runs-on: ubuntu-latest
     needs: cypress-tests
     steps:
