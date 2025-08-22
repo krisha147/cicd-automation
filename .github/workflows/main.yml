@@ -41,11 +41,11 @@ jobs:
         env:
           CYPRESS_EMAIL: ${{ secrets.EMAIL }}
           CYPRESS_PASSWORD: ${{ secrets.PASSWORD }}
-          CYPRESS_TOTPSECRET: ${{ secrets.TOTP_SECRET }}
+          CYPRESS_TOTP_SECRET: ${{ secrets.TOTP_SECRET }}
         run: |
           echo "Running Cypress with email=$CYPRESS_EMAIL"
           npx cypress run \
-            --env email=$CYPRESS_EMAIL,password=$CYPRESS_PASSWORD,totpSecret=$CYPRESS_TOTPSECRET
+            --env email=$CYPRESS_EMAIL,password=$CYPRESS_PASSWORD,totpSecret=$CYPRESS_TOTP_SECRET
 
   deploy-dev:
     name: Deploy to Dev
